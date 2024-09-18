@@ -32,6 +32,7 @@
     background-color: white;
 
     &__card {
+        user-select: none;
         transition: .5s ease;
         position: relative;
         cursor: pointer;
