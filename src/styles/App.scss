@@ -43,13 +43,9 @@
         border-bottom: 2px solid #AEB6CE33;
 
         &:hover {
-            background-color: #F1F5F8 !important;
+            background-color: #F4F7F9 !important;
         }
         
-        &:hover .unpin {
-            opacity: 1;
-        }
-
         &::before {
             content: "";
             display: block;
@@ -146,6 +142,7 @@
 .menu-list-cards {
     transition: .5s ease;
     opacity: 0;
+    box-shadow: -6px 9px 20px 0px #00000052;
     position: absolute;
     border-radius: 10px;
     right: 0;
@@ -160,6 +157,16 @@
 }
 
 .unpin {
-    transition: .5s ease;
+    border-radius: 20px;
+    box-shadow: #00000052 0px 8px 20px 0px;
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    top: 30px;
     opacity: 0;
+    font-size: 14px;
+    background-color: white;
+    transition: .5s ease;
+
+    @include size(100px, 20px);
 }

@@ -7,6 +7,8 @@ export default function Home() {
   
   const [widthWindow, setWidthWindow] = useState(0)
 
+  const [activePin, setActivePin] = useState(-1)
+
   const [activeMenu, setActiveMenu] = useState(false)
 
   const [textCard, setTextCard] = useState("")
@@ -77,15 +79,23 @@ export default function Home() {
       <div className="wrapper">
         <ul className="list-cards">
           {listCardsComponent.sort(sortCards).map((card: any) => {
-            return (<li key={card.id} onMouseLeave={() => localStorage.setItem("listCards", JSON.stringify(listCardsComponent))} onDragStart={(e) => dragStartHandler(card)}  onDragOver={(e) => dragOverHandler(e)} onDrop={(e) => dropHandler(e, card)} draggable={true} className='list-cards__card'>
+            return (<li onClick={(e) => {
+              if(activePin === card.id) {
+                setActivePin(-1)
+              } else {
+                setActivePin(card.id)
+              }
+            }} key={card.id} onMouseLeave={() => localStorage.setItem("listCards", JSON.stringify(listCardsComponent))} onDragStart={(e) => dragStartHandler(card)}  onDragOver={(e) => dragOverHandler(e)} onDrop={(e) => dropHandler(e, card)} draggable={true} className='list-cards__card'>
             <Image width={16} height={16} src={card.icon} alt={card.text}/>
             <p>
                 {card.text}
             </p>
-            <div onClick={() => {
-              
-              }} className="unpin">
-              <Image src="./unpin.svg" width={13} height={13} alt="Unpin icon"/>
+            <div onClick={(e) => {
+              e.stopPropagation() 
+              console.log(1)
+            }} style={{opacity: activePin === card.id ? 1 : 0}} className="unpin">
+              <Image width={16} height={16} src="./unpin.svg" alt="Unpin image"/>
+              Tab unpin
             </div>
           </li>
           )
