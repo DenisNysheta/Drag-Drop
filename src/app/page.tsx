@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -14,10 +15,24 @@ export default function Home() {
   // Redux Store
   const listCards = useSelector((state: any) => state.dropList.listCards)
   // Component Store
+  const [listCardsComponent, setListCardsComponent]: any[] = useState([])
+  const [currentCard, setCurrentCard]: any[] = useState(null)
 
+  let cardsLocaleStorage = JSON.parse(localStorage.getItem("listCards"))
   
-  const [listCardsComponent, setListCardsComponent] = useState([...listCards])
-  const [currentCard, setCurrentCard] = useState(null)
+  useEffect(() => {
+    localStorage.removeItem("listCards")
+    localStorage.setItem("listCards", JSON.stringify(listCardsComponent))
+  },[listCardsComponent])
+
+  useEffect(() => {
+    if(cardsLocaleStorage) {
+      setListCardsComponent(cardsLocaleStorage)
+    } else {
+      setListCardsComponent(listCards)
+      localStorage.setItem("listCards", JSON.stringify(listCards))
+    }
+  },[])
   
   // <----Drag and Drop functions---->
   function dragStartHandler(e: any, card: any) {
@@ -44,6 +59,7 @@ export default function Home() {
       
       return c
     }))
+
     setTextCard(currentCard.text)
   }
   
@@ -68,22 +84,13 @@ export default function Home() {
     };
   }, [widthWindow]);
 
-  console.log(widthWindow)
-
-
-  localStorage.setItem("listCards", JSON.stringify(listCardsComponent))
-
   return ( 
     <>
       <div className="wrapper">
         <ul className="list-cards">
           {listCardsComponent.sort(sortCards).map((card: any) => {
-            return (<li onClick={() => {
-
-            }} key={card.id} onDragStart={(e) => dragStartHandler(e, card)} onDragEnd={(e) => dragEndHandler(e)} onDragLeave={(e) => dragEndHandler(e)} onDragOver={(e) => dragOverHandler(e)} onDrop={(e) => dropHandler(e, card)} draggable={true} className='list-cards__card'>
-            <div>
-                {card.icon}
-            </div> 
+            return (<li key={card.id} onDragStart={(e) => dragStartHandler(e, card)} onDragEnd={(e) => dragEndHandler(e)} onDragLeave={(e) => dragEndHandler(e)} onDragOver={(e) => dragOverHandler(e)} onDrop={(e) => dropHandler(e, card)} draggable={true} className='list-cards__card'>
+            <Image width={16} height={16} src={card.icon} alt={card.text}/>
             <p>
                 {card.text}
             </p>
