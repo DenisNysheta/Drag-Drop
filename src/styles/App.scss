@@ -1,0 +1,155 @@
+@import "./normalize.scss";
+@import "./extencions.scss";
+@import "./mixins.scss";
+
+.wrapper {
+    gap: 25px;
+    position: relative;
+    background-color: #F1F5F8;
+    @include size(100%,100vh);
+    @include flexy(flex-start,center,column,no-wrap);
+}
+
+.box {
+    background-color: white;
+    @include size(96%, 80vh);
+    @include flexy(center,center,row,no-wrap);
+}
+
+.card {
+    user-select: none;
+    border-radius: 12px;
+    border: 5px solid;
+    @include size(200px, 300px);
+    @include flexy(center,center,row,no-wrap);
+    margin: 20px;
+    cursor: grab;
+}
+
+.list-cards {
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+
+    &__card {
+        position: relative;
+        cursor: pointer;
+        gap: 10px;
+        padding: 0 8px;
+        align-content: center;
+        position: relative;
+        border-top: 2px solid #AEB6CE33;
+        border-bottom: 2px solid #AEB6CE33;
+
+        &:hover {
+            background-color: #F1F5F8 !important;
+        }
+        
+        &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            background-color: #AEB6CE33;
+            border-radius: 20px;
+            left: 0;
+            bottom: 15px;
+            @include size(1px, 20px);
+        }
+
+        &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            background-color: #AEB6CE33;
+            border-radius: 20px;
+            right: 0;
+            bottom: 15px;
+            @include size(1px, 20px);
+        }
+        
+        & > p {
+            overflow: hidden;
+            top: -1px;
+            position: relative;
+            @extend %text_card;
+        }
+
+        @include size(145px, 48px);
+        @include flexy(center,center,row,no-wrap);
+    }
+
+
+    @include size(100%, 57px);
+    @include flexy(flex-start,flex-start,row,no-wrap);
+}
+
+// .list-cards::-webkit-scrollbar-thumb {
+//     width: 10px;
+//     background-color: red;
+// }
+
+.list-cards::-webkit-scrollbar {
+    height: 5px;
+    width: 5px; /* Ширина вертикального скролл-бара */
+  }
+  
+  /* Стилистика треку скролл-бара */
+  .list-cards::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Колір фону треку */
+  }
+  
+  /* Стилистика ручки скролл-бара */
+  .list-cards::-webkit-scrollbar-thumb {
+    background: #888; /* Колір ручки */
+    border-radius: 10px; /* Закруглення ручки */
+  }
+  
+  /* Стилистика ручки при наведенні */
+  .list-cards::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Темніший колір при наведенні */
+  }
+
+  .drop-down-menu {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.918);
+    
+    &::before {
+        transition: .5s ease;
+        content: "";
+        display: block;
+        top: 10px;
+        left: 20px;
+        position: absolute;
+        border-top: 3px solid black;
+        border-left: 3px solid black;
+        transform: rotate(225deg);
+        @include size(10px, 10px);
+    }
+
+    @include size(50px, 47px)
+  }
+
+  .active-btn {
+    &::before {
+        top: 15px !important;
+        transform: rotate(45deg);
+    }
+  }
+
+.menu-list-cards {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    border-radius: 10px;
+    right: 0;
+    top: 50px;
+    background-color: rgb(255, 255, 255);
+    @include size(225px,185px)
+}
+
+.card-pin {
+    position: absolute;
+    background-color: white;
+}
