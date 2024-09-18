@@ -14,8 +14,8 @@ export default function Home() {
   // Redux Store
   const listCards = useSelector((state: any) => state.dropList.listCards)
   // Component Store
-  const [listCardsComponent, setListCardsComponent]: any[] = useState([])
-  const [currentCard, setCurrentCard]: any[] = useState(null)
+  const [listCardsComponent, setListCardsComponent] = useState([])
+  const [currentCard, setCurrentCard] = useState(null)
   
   useEffect(() => {
     if(localStorage.getItem("listCards")) {
