@@ -1,4 +1,3 @@
-import { Dashboard, Banking, Telephone, Accountig, Verkauf, Statistik, PostOffice, Administration, Help, Warentbestand, Auswahllisten, Einkauf, Rech } from "@/svg/listSVG";
 import { createSlice } from "@reduxjs/toolkit";
 
 

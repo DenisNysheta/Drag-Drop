@@ -32,6 +32,7 @@
     background-color: white;
 
     &__card {
+        transition: .5s ease;
         position: relative;
         cursor: pointer;
         gap: 10px;
@@ -45,6 +46,10 @@
             background-color: #F1F5F8 !important;
         }
         
+        &:hover .unpin {
+            opacity: 1;
+        }
+
         &::before {
             content: "";
             display: block;
@@ -152,4 +157,9 @@
 .card-pin {
     position: absolute;
     background-color: white;
+}
+
+.unpin {
+    transition: .5s ease;
+    opacity: 0;
 }

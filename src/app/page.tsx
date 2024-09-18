@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function Home() {
@@ -11,29 +11,21 @@ export default function Home() {
 
   const [textCard, setTextCard] = useState("")
 
-
   // Redux Store
   const listCards = useSelector((state: any) => state.dropList.listCards)
   // Component Store
   const [listCardsComponent, setListCardsComponent]: any[] = useState([])
   const [currentCard, setCurrentCard]: any[] = useState(null)
-
-  let cardsLocaleStorage = JSON.parse(localStorage.getItem("listCards"))
   
   useEffect(() => {
-    localStorage.removeItem("listCards")
-    localStorage.setItem("listCards", JSON.stringify(listCardsComponent))
-  },[listCardsComponent])
-
-  useEffect(() => {
-    if(cardsLocaleStorage) {
-      setListCardsComponent(cardsLocaleStorage)
+    if(localStorage.getItem("listCards")) {
+      setListCardsComponent(JSON.parse(localStorage.getItem("listCards")))
     } else {
-      setListCardsComponent(listCards)
       localStorage.setItem("listCards", JSON.stringify(listCards))
+      setListCardsComponent(JSON.parse(localStorage.getItem("listCards")))
     }
   },[])
-  
+
   // <----Drag and Drop functions---->
   function dragStartHandler(e: any, card: any) {
     setCurrentCard(card)
@@ -59,7 +51,6 @@ export default function Home() {
       
       return c
     }))
-
     setTextCard(currentCard.text)
   }
   
@@ -89,12 +80,18 @@ export default function Home() {
       <div className="wrapper">
         <ul className="list-cards">
           {listCardsComponent.sort(sortCards).map((card: any) => {
-            return (<li key={card.id} onDragStart={(e) => dragStartHandler(e, card)} onDragEnd={(e) => dragEndHandler(e)} onDragLeave={(e) => dragEndHandler(e)} onDragOver={(e) => dragOverHandler(e)} onDrop={(e) => dropHandler(e, card)} draggable={true} className='list-cards__card'>
+            return (<li key={card.id} onMouseLeave={() => localStorage.setItem("listCards", JSON.stringify(listCardsComponent))} onDragStart={(e) => dragStartHandler(e, card)} onDragEnd={(e) => dragEndHandler(e)} onDragLeave={(e) => dragEndHandler(e)} onDragOver={(e) => dragOverHandler(e)} onDrop={(e) => dropHandler(e, card)} draggable={true} className='list-cards__card'>
             <Image width={16} height={16} src={card.icon} alt={card.text}/>
             <p>
                 {card.text}
             </p>
-        </li>)
+            <div onClick={() => {
+              
+              }} className="unpin">
+              <Image src="./unpin.svg" width={13} height={13} alt="Unpin icon"/>
+            </div>
+          </li>
+          )
           })}
           <li onClick={(e) => {
             e.currentTarget.classList.toggle("active-btn")
