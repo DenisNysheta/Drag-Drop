@@ -7,6 +7,8 @@ export default function Home() {
   
   const [widthWindow, setWidthWindow] = useState(0)
 
+  const [activeUnpin, setActiveUnpin] = useState(-1)
+
   const [activePin, setActivePin] = useState(-1)
 
   const [activeMenu, setActiveMenu] = useState(false)
@@ -17,6 +19,7 @@ export default function Home() {
   const listCards = useSelector((state: any) => state.dropList.listCards)
   // Component Store
   const [listCardsComponent, setListCardsComponent] = useState([])
+  const [pinCards, setPinCards]: any[] = useState([])
   const [currentCard, setCurrentCard] = useState(null)
   
   useEffect(() => {
@@ -78,6 +81,27 @@ export default function Home() {
     <>
       <div className="wrapper">
         <ul className="list-cards">
+          {pinCards.map((card, index) => {
+            return (
+              <li onClick={() => {
+                setActivePin(pinCards.filter(pin => {
+                  if(pin.id !== card.id) {
+                    return pin
+                  }
+                }))
+                if(activeUnpin === card.id) {
+                  setActiveUnpin(-1)
+                } else {
+                  setActiveUnpin(card.id)
+                }
+              }} key={index} className="pin-card">
+                <Image width={16} height={16} src={card.icon} alt={card.text}/>
+                <div style={{opacity: activeUnpin === card.id ? 1 : 0, visibility: activeUnpin === card.id ? "visible" : "hidden"}} className="pin-card__text">
+                  {card.text}
+                </div>
+              </li>
+            )
+          })}
           {listCardsComponent.sort(sortCards).map((card: any) => {
             return (<li onClick={(e) => {
               if(activePin === card.id) {
@@ -92,8 +116,9 @@ export default function Home() {
             </p>
             <div onClick={(e) => {
               e.stopPropagation() 
-              console.log(1)
-            }} style={{opacity: activePin === card.id ? 1 : 0}} className="unpin">
+              setPinCards([...pinCards, {...card}])
+              setActivePin(-1)
+            }} style={{opacity: activePin === card.id ? 1 : 0, visibility: activePin === card.id ? "visible" : "hidden"}} className="unpin">
               <Image width={16} height={16} src="./unpin.svg" alt="Unpin image"/>
               Tab unpin
             </div>

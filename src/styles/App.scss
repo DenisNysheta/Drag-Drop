@@ -165,9 +165,35 @@
     position: absolute;
     top: 30px;
     opacity: 0;
+    visibility: hidden;
     font-size: 14px;
     background-color: white;
     transition: .5s ease;
-
+    
     @include size(100px, 20px);
+}
+
+.pin-card {
+    cursor: pointer;
+    padding: 20px;
+    position: relative;
+    border-right: 2px solid rgba(174, 182, 206, 0.2);
+    border-bottom: 2px solid rgba(174, 182, 206, 0.2);
+    
+    &__text {
+        padding: 5px;
+        border-radius: 20px;
+        box-shadow: #00000052 0px 8px 20px 0px;
+        visibility: hidden;
+        opacity: 0;
+        right: -10px;
+        transition: .5s ease;
+        position: absolute;
+        bottom: -7px;
+        font-size: 12px;
+        background-color: white
+    }
+
+    @include size(50px,48px);
+    @include flexy(center,center,row,no-wrap);
 }
